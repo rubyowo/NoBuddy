@@ -4,7 +4,7 @@ WIP Python concept, only tested with the CMF Buds Pro 2
 
 Features:
  - [x] Control ANC Modes
- - [ ] Control ANC Level (Low/Medium/High/Adaptive)
+ - [x] Control ANC Level (Low/Med/High/Adaptive)
  - [ ] Battery level reporting
  - [ ] Customize controls
  - [ ] Spatial Audio

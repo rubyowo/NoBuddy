@@ -1,5 +1,6 @@
 import typing
 import bluetooth
+import argparse
 from payloads import *
 from utils import finalPayload
 
@@ -25,16 +26,18 @@ class RFCOMMSocket(bluetooth.BluetoothSocket):
         return super().send(finalPayload(payload, self.counter))
         self.counter += 1
 
+parser = argparse.ArgumentParser(description="PoC tool to manage your Nothing/CMF devices")
+parser.add_argument("address", type=str, help="MAC Address of your device")
+parser.add_argument("--anc", choices=["high", "mid", "low", "adaptive", "transparency", "off"])
+args = parser.parse_args()
 
-mac = "3C:B0:ED:30:92:B3"
-
+mac = args.address
 sock = RFCOMMSocket()
 port = sock.find_rfcomm_port(mac)
 sock.connect((mac, port))
 
-sock.send(ANCPayloads.ENABLED)
-sock.send(ANCPayloads.TRANSPARENCY)
-sock.send(ANCPayloads.DISABLED)
+if args.anc:
+    sock.send(ANCPayloads[args.anc.upper()])
 
 sock.close()
 

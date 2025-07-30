@@ -11,10 +11,7 @@ def getCrc(payload: bytes) -> bytes:
 
 # Payload structure:
 # protocol header + command header + sequence id (counter) + command payload + 00 (common in every command) + crc + c4 (terminator)
-
 def finalPayload(payload: str, counter: int) -> bytes:
     payload = counter.to_bytes() + bytes.fromhex(payload + "00")
     final = proto_header + cmd_header + payload + getCrc(payload) + terminator
-
-    print(final.hex(), counter)
     return final
